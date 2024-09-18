@@ -6,6 +6,8 @@ hide: true
 ---
 Hello, my name is James Edrosolo and this is my homepage. 
 
+{% include nav/javascript_project.html %}
+
 <div style="border: 2px solid black; padding: 5px; margin-bottom: 15px;">
 <p> Links to websites </p>
    <div class="text-center">
@@ -43,7 +45,7 @@ Hello, my name is James Edrosolo and this is my homepage.
   <a href="https://drive.google.com/file/d/1ywTt0PokJsMcywNl7y2z8fRIKq7qxmja/view?usp=sharing" target="_blank">Del Norte vs. Westview</a>
 </body>
   
-{%include nav/javascript_project.html}
+
 
 
 
