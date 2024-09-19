@@ -4,7 +4,9 @@ title: Student Home
 description: Home Page
 hide: true
 ---
-Hello, my name is James Edrosolo and this is my homepage. 
+<div>
+
+Hello, my name is James Edrosolo and this is my homepage.  <div>
 
 {% include nav/javascript_project.html %}
 
