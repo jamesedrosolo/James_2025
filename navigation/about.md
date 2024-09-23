@@ -35,3 +35,11 @@ Here are some photos that represent me:
 <span style="font-size:20px;">Sports</span> <div> <div>
 <p> I have done wrestling since my freshman year of highschool and this is my first year of football. In my freshman year, I wrestled at Westview Highschool and I transferred to Del Norte this year. <p>
 <a href="https://drive.google.com/file/d/1ywTt0PokJsMcywNl7y2z8fRIKq7qxmja/view?usp=sharing" target="_blank">Wrestling Westview vs. Del Norte</a> 
+
+<script src="https://utteranc.es/client.js"
+        repo="jamesedrosolo/james_2025"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
