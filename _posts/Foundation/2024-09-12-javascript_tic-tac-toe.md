@@ -18,109 +18,122 @@ comments: true
         body {
             font-family: Arial, sans-serif;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            height: 100vh;
-            background-color: #f0f0f0;
+            margin-top: 50px;
         }
-        #game {
+        .board {
             display: grid;
             grid-template-columns: repeat(3, 100px);
-            grid-template-rows: repeat(3, 100px);
             gap: 5px;
         }
         .cell {
             width: 100px;
             height: 100px;
+            background-color: #f0f0f0;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
             font-size: 2em;
-            background-color: #fff;
-            border: 2px solid #ccc;
             cursor: pointer;
         }
         .cell:hover {
-            background-color: #e0e0e0;
+            background-color: #d0d0d0;
         }
-        #status {
-            margin-top: 20px;
-            font-size: 1.2em;
+        h1 {
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
+    <h1>Tic Tac Toe</h1>
+    <div class="board" id="board">
+        <div class="cell" data-index="0"></div>
+        <div class="cell" data-index="1"></div>
+        <div class="cell" data-index="2"></div>
+        <div class="cell" data-index="3"></div>
+        <div class="cell" data-index="4"></div>
+        <div class="cell" data-index="5"></div>
+        <div class="cell" data-index="6"></div>
+        <div class="cell" data-index="7"></div>
+        <div class="cell" data-index="8"></div>
+    </div>
+    <button id="restart">Restart</button>
 
-<div id="game"></div>
-<div id="status"></div>
+    <script>
+        const board = document.getElementById('board');
+        const cells = document.querySelectorAll('.cell');
+        const restartButton = document.getElementById('restart');
 
-<script>
-    const gameBoard = document.getElementById('game');
-    const statusDisplay = document.getElementById('status');
-    let board = ['', '', '', '', '', '', '', '', ''];
-    let currentPlayer = 'X';
-    let isGameActive = true;
+        let currentPlayer = 'X';
+        let gameActive = true;
+        let gameState = ['', '', '', '', '', '', '', '', ''];
 
-    const winningConditions = [
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-        [0, 3, 6],
-        [1, 4, 7],
-        [2, 5, 8],
-        [0, 4, 8],
-        [2, 4, 6]
-    ];
+        const winningConditions = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6],
+        ];
 
-    function handleCellClick(index) {
-        if (board[index] !== '' || !isGameActive) return;
-        
-        board[index] = currentPlayer;
-        renderBoard();
-        checkResult();
-    }
+        function handleCellClick(event) {
+            const clickedCell = event.target;
+            const clickedCellIndex = parseInt(clickedCell.getAttribute('data-index'));
 
-    function renderBoard() {
-        gameBoard.innerHTML = '';
-        board.forEach((cell, index) => {
-            const cellElement = document.createElement('div');
-            cellElement.classList.add('cell');
-            cellElement.textContent = cell;
-            cellElement.addEventListener('click', () => handleCellClick(index));
-            gameBoard.appendChild(cellElement);
-        });
-    }
-
-    function checkResult() {
-        let roundWon = false;
-        for (let i = 0; i < winningConditions.length; i++) {
-            const [a, b, c] = winningConditions[i];
-            if (board[a] === '' || board[b] === '' || board[c] === '') continue;
-            if (board[a] === board[b] && board[b] === board[c]) {
-                roundWon = true;
-                break;
+            if (gameState[clickedCellIndex] !== '' || !gameActive) {
+                return;
             }
+
+            gameState[clickedCellIndex] = currentPlayer;
+            clickedCell.textContent = currentPlayer;
+
+            checkResult();
         }
 
-        if (roundWon) {
-            statusDisplay.textContent = `Player ${currentPlayer} Wins!`;
-            isGameActive = false;
-            return;
+        function checkResult() {
+            let roundWon = false;
+
+            for (let i = 0; i < winningConditions.length; i++) {
+                const [a, b, c] = winningConditions[i];
+                if (gameState[a] === '' || gameState[b] === '' || gameState[c] === '') {
+                    continue;
+                }
+                if (gameState[a] === gameState[b] && gameState[a] === gameState[c]) {
+                    roundWon = true;
+                    break;
+                }
+            }
+
+            if (roundWon) {
+                alert(`Player ${currentPlayer} wins!`);
+                gameActive = false;
+                return;
+            }
+
+            if (!gameState.includes('')) {
+                alert("It's a draw!");
+                gameActive = false;
+                return;
+            }
+
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
         }
 
-        if (!board.includes('')) {
-            statusDisplay.textContent = 'It\'s a Draw!';
-            isGameActive = false;
-            return;
+        function restartGame() {
+            gameActive = true;
+            currentPlayer = 'X';
+            gameState = ['', '', '', '', '', '', '', '', ''];
+            cells.forEach(cell => {
+                cell.textContent = '';
+            });
         }
 
-        currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-        statusDisplay.textContent = `Player ${currentPlayer}'s Turn`;
-    }
-
-    renderBoard();
-    statusDisplay.textContent = `Player ${currentPlayer}'s Turn`;
-</script>
-
+        cells.forEach(cell => cell.addEventListener('click', handleCellClick));
+        restartButton.addEventListener('click', restartGame);
+    </script>
 </body>
 </html>
